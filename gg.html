@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Weather Wise: Stay Safe, Stay Smart – A Fun Quiz for Students!</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background: #f0f9ff;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  header {
+    background: #0077b6;
+    color: white;
+    padding: 20px;
+  }
+  header img {
+    width: 80px;
+    vertical-align: middle;
+    margin-right: 10px;
+  }
+  header h1 {
+    display: inline-block;
+    font-size: 22px;
+    vertical-align: middle;
+    max-width: 80%;
+  }
+  .weather, .safety, .quiz {
+    flex: 1;
+    margin: 20px auto;
+    max-width: 600px;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  }
+  .safety {
+    background: #e0f7fa;
+    text-align: left;
+  }
+  .safety h2 {
+    color: #0077b6;
+    text-align: center;
+  }
+  .safety ul {
+    padding-left: 20px;
+  }
+  .safety li {
+    margin: 10px 0;
+  }
+  .quiz .question {
+    font-weight: bold;
+    margin: 15px 0 10px;
+  }
+  .quiz .options button, .weather button {
+    display: block;
+    width: 100%;
+    margin: 5px 0;
+    padding: 10px;
+    background: #0096c7;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  .quiz .options button:hover, .weather button:hover {
+    background: #023e8a;
+  }
+  #result {
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #0077b6;
+  }
+  footer {
+    background: linear-gradient(90deg, #023e8a, #0077b6);
+    color: white;
+    text-align: center;
+    padding: 15px;
+    font-size: 14px;
+    box-shadow: 0 -2px 6px rgba(0,0,0,0.3);
+    letter-spacing: 0.5px;
+  }
+  footer span {
+    display: block;
+    font-size: 12px;
+    color: #caf0f8;
+    margin-top: 5px;
+  }
+  #weather-display {
+    margin-top: 15px;
+    text-align: center;
+  }
+  input[type=text] {
+    padding: 8px;
+    width: 70%;
+    margin-bottom: 10px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <img src="https://images.openai.com/thumbnails/url/zqY-4Hicu1mUUVJSUGylr5-al1xUWVCSmqJbkpRnoJdeXJJYkpmsl5yfq5-Zm5ieWmxfaAuUsXL0S7F0Tw70qfQvqwh0qip0iTdON_bVTS-3SLcwjc9zKzXKTytyTU6KL450zo9MCzcwi0j38csMd3fTdbX0SzJRKwYAzW0ozQ" alt="School Logo">
+  <h1>Weather Wise: Stay Safe, Stay Smart – A Fun Quiz for Students!</h1>
+</header>
+
+<!-- Weather Update -->
+<div class="weather">
+  <h2>🌤 Check Current Weather</h2>
+  <input type="text" id="city-input" placeholder="Enter city name" />
+  <button onclick="getWeather()">Get Weather</button>
+  <div id="weather-display"></div>
+</div>
+
+<!-- Safety Tips -->
+<div class="safety">
+  <h2>🛡️ Safety Tips</h2>
+  <ul>
+    <li>🌋 <strong>Earthquake:</strong> Drop, Cover, Hold On; stay away from windows; secure heavy furniture; prepare emergency kit.</li>
+    <li>🌊 <strong>Flood:</strong> Move to higher ground; avoid walking/driving through floodwater; unplug appliances; keep important documents dry.</li>
+    <li>🌪️ <strong>Typhoon:</strong> Secure loose objects outdoors; store food & water; stay indoors; follow official updates; avoid rivers/coastal areas.</li>
+    <li>🔥 <strong>Fire:</strong> Stop, Drop, and Roll if clothes catch fire; use fire extinguisher; have an evacuation plan; never use elevators during fire.</li>
+    <li>☀️ <strong>Heatwave:</strong> Drink plenty of water; stay indoors during peak heat; use fans or air conditioning; avoid strenuous activities outdoors.</li>
+    <li>🛡️ <strong>General:</strong> Prepare an emergency kit; know local emergency numbers; have a family communication plan; stay updated through official sources.</li>
+  </ul>
+</div>
+
+<!-- Quiz Section -->
+<div class="quiz">
+  <div id="quiz-container"></div>
+  <div id="result"></div>
+</div>
+
+<footer>
+  © 2025 Northville 15 Integrated School | Grade 11 – Hopper Students <br>
+  Created by Hopper ICT Project Team
+  <span>Weather Wise: Stay Safe, Stay Smart – A Fun Quiz for Students!</span>
+</footer>
+
+<script>
+// --- Quiz JS ---
+const quizData = [
+  { q: "What should you do during an earthquake?", options: ["Run outside immediately", "Drop, Cover, Hold On", "Hide near windows"], answer: 1 },
+  { q: "What should you avoid during a flood?", options: ["Walking through floodwater", "Moving to higher ground", "Preparing an emergency kit"], answer: 0 },
+  { q: "If your clothes catch fire, what should you do?", options: ["Run fast", "Stop, Drop, and Roll", "Hide under the bed"], answer: 1 },
+  { q: "What should you prepare before a typhoon?", options: ["Store food and water", "Go swimming", "Leave windows open"], answer: 0 },
+  { q: "What is the emergency hotline number for Police in the Philippines?", options: ["911", "117", "123"], answer: 1 },
+  { q: "Where should you stay during a typhoon?", options: ["Outdoors", "Safe indoor shelter", "Near rivers"], answer: 1 },
+  { q: "During a fire, what should you NOT use?", options: ["Stairs", "Fire exit", "Elevator"], answer: 2 },
+  { q: "What is the most important thing to prepare for disasters?", options: ["Emergency Kit", "PlayStation", "Extra pillows"], answer: 0 },
+  { q: "Where is the safest place during an earthquake?", options: ["Under a sturdy table", "Near glass windows", "On the roof"], answer: 0 },
+  { q: "After a flood, what should you avoid?", options: ["Swimming in floodwater", "Cleaning surroundings", "Boiling water"], answer: 0 },
+];
+let currentQuestion = 0;
+let score = 0;
+const quizContainer = document.getElementById("quiz-container");
+const resultContainer = document.getElementById("result");
+function loadQuestion() {
+  if(currentQuestion < quizData.length){
+    let q = quizData[currentQuestion];
+    quizContainer.innerHTML = `
+      <div class="question">${currentQuestion+1}. ${q.q}</div>
+      <div class="options">
+        ${q.options.map((opt,i)=>`<button onclick="checkAnswer(${i})">${opt}</button>`).join("")}
+      </div>
+    `;
+  } else {
+    quizContainer.innerHTML = "";
+    resultContainer.innerHTML = `✅ Your Score: ${score}/${quizData.length}`;
+  }
+}
+function checkAnswer(selected){
+  if(selected === quizData[currentQuestion].answer) score++;
+  currentQuestion++;
+  loadQuestion();
+}
+loadQuestion();
+
+// --- Weather JS ---
+async function getWeather(){
+  const city = document.getElementById("city-input").value;
+  const display = document.getElementById("weather-display");
+  const apiKey = "YOUR_API_KEY_HERE"; // Replace with your OpenWeatherMap API key
+  if(!city) return alert("Please enter a city name.");
+  display.innerHTML = "Loading...";
+  try{
+    const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`);
+    const data = await response.json();
+    if(data.cod !== 200){
+      display.innerHTML = `❌ ${data.message}`;
+      return;
+    }
+    display.innerHTML = `
+      <h3>${data.name}, ${data.sys.country}</h3>
+      <p>🌡 Temperature: ${data.main.temp}°C</p>
+      <p>💧 Humidity: ${data.main.humidity}%</p>
+      <p>🌤 Condition: ${data.weather[0].description}</p>
+    `;
+  } catch(err){
+    display.innerHTML = "Error fetching weather data.";
+  }
+}
+</script>
+
+</body>
+</html>
